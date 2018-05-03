@@ -1,5 +1,3 @@
-/* TODO: TO BE COMPLETED */
-
 %{
 
 #include "lex.yy.h"
@@ -68,16 +66,6 @@ stmt    : ';'
         ;
 
 expr    : ID   '=' expr { emit(dup); emit2(istore, $1->localvar); }
-        | ID   PA  expr { /* TODO: TO BE COMPLETED */ error("+= operator not implemented"); }
-        | ID   NA  expr { /* TODO: TO BE COMPLETED */ error("-= operator not implemented"); }
-        | ID   TA  expr { /* TODO: TO BE COMPLETED */ error("*= operator not implemented"); }
-        | ID   DA  expr { /* TODO: TO BE COMPLETED */ error("/= operator not implemented"); }
-        | ID   MA  expr { /* TODO: TO BE COMPLETED */ error("%= operator not implemented"); }
-        | ID   AA  expr { /* TODO: TO BE COMPLETED */ error("&= operator not implemented"); }
-        | ID   XA  expr { /* TODO: TO BE COMPLETED */ error("^= operator not implemented"); }
-        | ID   OA  expr { /* TODO: TO BE COMPLETED */ error("|= operator not implemented"); }
-        | ID   LA  expr { /* TODO: TO BE COMPLETED */ error("<<= operator not implemented"); }
-        | ID   RA  expr { /* TODO: TO BE COMPLETED */ error(">>= operator not implemented"); }
         | expr OR  expr { /* TODO: TO BE COMPLETED */ error("|| operator not implemented"); }
         | expr AN  expr { /* TODO: TO BE COMPLETED */ error("&& operator not implemented"); }
         | expr '|' expr { /* TODO: TO BE COMPLETED */ error("| operator not implemented"); }
@@ -89,8 +77,6 @@ expr    : ID   '=' expr { emit(dup); emit2(istore, $1->localvar); }
         | expr '>' expr { /* TODO: TO BE COMPLETED */ error("> operator not implemented"); }
         | expr LE  expr { /* TODO: TO BE COMPLETED */ error("<= operator not implemented"); }
         | expr GE  expr { /* TODO: TO BE COMPLETED */ error(">= operator not implemented"); }
-        | expr LS  expr { /* TODO: TO BE COMPLETED */ error("<< operator not implemented"); }
-        | expr RS  expr { /* TODO: TO BE COMPLETED */ error(">> operator not implemented"); }
         | expr '+' expr { /* TODO: TO BE COMPLETED */ error("+ operator not implemented"); }
         | expr '-' expr { /* TODO: TO BE COMPLETED */ error("- operator not implemented"); }
         | expr '*' expr { /* TODO: TO BE COMPLETED */ error("* operator not implemented"); }
