@@ -1547,7 +1547,7 @@ yyreduce:
 
   case 27:
 #line 80 "mycc.y" /* yacc.c:1646  */
-    { /* TODO: TO BE COMPLETED */ error("+ operator not implemented"); }
+    { emit(iadd); }
 #line 1552 "mycc.c" /* yacc.c:1646  */
     break;
 

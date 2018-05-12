@@ -17,10 +17,6 @@ static int localvar = 3;	/* JVM first local var index */
 static int install_id();
 static int install_int();
 
-#define MAX_INCLUDE_DEPTH 10
-YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
-int include_stack_ptr = 0;
-
 %}
 
 digit           [0-9]
@@ -42,39 +38,19 @@ int             {digit}+
 "#"include             		   BEGIN(incl);
 <incl>[ \t\<]*    			   /* eat the whitespace */
 <incl>[^ \t\n\<\>]+   	{ 	   /* got the include file name */ 
-				if ( include_stack_ptr >= MAX_INCLUDE_DEPTH )
-				{
-				    	fprintf( stderr, "Includes nested too deeply" );
-				    	exit( 1 );
-				}
-
-				include_stack[include_stack_ptr++] = YY_CURRENT_BUFFER;
 				yyin = fopen( yytext, "r" );
+				yypush_buffer_state(yy_create_buffer( yyin, YY_BUF_SIZE ));
+				BEGIN(INITIAL);
+             	}
 
-				if ( ! yyin )
-				{
-					printf("ERROR\n");
-					exit( 1 );
-				}
-			}
-<incl>\>                {
-                        	yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
-                        	BEGIN( 0 );
-                    	}
-
-<<EOF>> 		{
-				if ( --include_stack_ptr < 0 )
-				{
+<<EOF>> 	{
+				yypop_buffer_state();
+				if ( !YY_CURRENT_BUFFER ){
 					yyterminate();
 				}
-
-				else
-				{
-					yy_delete_buffer( YY_CURRENT_BUFFER );
-					yy_switch_to_buffer(
-					include_stack[include_stack_ptr] );
-				}
 			}
+			
+return					  	   { return RETURN; }
 {id}                           { return install_id(); }
 {int}                          { return install_int(); }
 "+="                           { return PA; }
