@@ -47,10 +47,10 @@ stmts   : stmts stmt
 
 stmt    : ';'
         | expr ';'      { emit(pop); /* do not leave a value on the stack */ }
-        | IF '(' expr ')' stmt
-                        { /* TODO: TO BE COMPLETED */ error("if-then not implemented"); }
-        | IF '(' expr ')' stmt ELSE stmt
-                        { /* TODO: TO BE COMPLETED */ error("if-then-else not implemented"); }
+        | IF '(' expr ')' M stmt 
+                        { backpatch($5, pc - $5); emit3(goto_, 3); }
+        | IF '(' expr ')' M stmt L ELSE stmt N
+        				{ backpatch($5, $7 - $5); emit3(goto_, 3); backpatch($7,pc - $7); emit3(goto_, 3); }
         | WHILE '(' expr ')' stmt
                         { /* TODO: TO BE COMPLETED */ error("while-loop not implemented"); }
         | DO stmt WHILE '(' expr ')' ';'
@@ -73,11 +73,11 @@ expr    : ID   '=' expr { emit(dup); emit2(istore, $1->localvar); }
         | expr '&' expr { /* TODO: TO BE COMPLETED */ error("& operator not implemented"); }
         | expr EQ  expr { /* TODO: TO BE COMPLETED */ error("== operator not implemented"); }
         | expr NE  expr { /* TODO: TO BE COMPLETED */ error("!= operator not implemented"); }
-        | expr '<' expr { /* TODO: TO BE COMPLETED */ error("< operator not implemented"); }
-        | expr '>' expr { /* TODO: TO BE COMPLETED */ error("> operator not implemented"); }
-        | expr LE  expr { /* TODO: TO BE COMPLETED */ error("<= operator not implemented"); }
+        | expr '<' expr { emit3(if_icmpge, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
+        | expr '>' expr { emit3(if_icmple, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
+        | expr LE  expr { /* TODO: TO BE COMPLETED */ error("!= operator not implemented");  }
         | expr GE  expr { /* TODO: TO BE COMPLETED */ error(">= operator not implemented"); }
-        | expr '+' expr { /* TODO: TO BE COMPLETED */ error("+ operator not implemented"); }
+        | expr '+' expr { emit(iadd); }
         | expr '-' expr { /* TODO: TO BE COMPLETED */ error("- operator not implemented"); }
         | expr '*' expr { /* TODO: TO BE COMPLETED */ error("* operator not implemented"); }
         | expr '/' expr { /* TODO: TO BE COMPLETED */ error("/ operator not implemented"); }
@@ -98,18 +98,20 @@ expr    : ID   '=' expr { emit(dup); emit2(istore, $1->localvar); }
         | INT8          { emit2(bipush, $1); }
         | INT16         { emit3(sipush, $1); }
         | INT32         { emit2(ldc, constant_pool_add_Integer(&cf, $1)); }
-	| FLT		{ error("float constant not supported in Pr3"); }
-	| STR		{ error("string constant not supported in Pr3"); }
+		| FLT		{ error("float constant not supported in Pr3"); }
+		| STR		{ error("string constant not supported in Pr3"); }
         ;
 
 L       : /* empty */   { $$ = pc; }
         ;
 
+//On s'ha possat el if equal
 M       : /* empty */   { $$ = pc;	/* location of inst. to backpatch */
 			  emit3(ifeq, 0);
 			}
         ;
 
+//On s'ha possat el Goto
 N       : /* empty */   { $$ = pc;	/* location of inst. to backpatch */
 			  emit3(goto_, 0);
 			}
