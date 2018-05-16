@@ -75,7 +75,7 @@ int             {digit}+
 					include_stack[include_stack_ptr] );
 				}
 			}
-{id}                           { return install_id(); }
+{id}                           { /* return install_id(); */ }
 {int}                          { return install_int(); }
 "+="                           { return PA; }
 "-="                           { return NA; }
@@ -103,6 +103,7 @@ int             {digit}+
 "<:"                           { return '['; }
 ":>"                           { return ']'; }
 [!$%&()*+,\-./:;<=>?\[\]^{|}~] { return yytext[0]; }
+"return"                       { RETURN; }
 .                              { yyerror("Unknown character ignored"); }
 
 %%
