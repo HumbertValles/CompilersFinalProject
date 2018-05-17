@@ -1,7 +1,11 @@
+%nonassoc IFX
+%nonassoc ELSE
+
 %{
 
 #include "lex.yy.h"
 #include "global.h"
+
 static struct ClassFile cf;
 
 %}
@@ -47,7 +51,7 @@ stmts   : stmts stmt
 
 stmt    : ';'
         | expr ';'      { emit(pop); /* do not leave a value on the stack */ }
-        | IF '(' expr ')' M stmt 
+        | IF '(' expr ')' M stmt %prec IFX
                         { backpatch($5, pc - $5); }
         | IF '(' expr ')' M stmt N ELSE stmt 
         				{ backpatch($5, $7 - $5); backpatch($7, pc - $7); }
