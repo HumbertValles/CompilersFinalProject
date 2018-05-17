@@ -48,11 +48,11 @@ stmts   : stmts stmt
 stmt    : ';'
         | expr ';'      { emit(pop); /* do not leave a value on the stack */ }
         | IF '(' expr ')' M stmt 
-                        { backpatch($5, pc - $5); emit3(goto_, 3); }
-        | IF '(' expr ')' M stmt L ELSE stmt N
-        				{ backpatch($5, $7 - $5); emit3(goto_, 3); backpatch($7,pc - $7); emit3(goto_, 3); }
-        | WHILE '(' expr ')' stmt
-                        { /* TODO: TO BE COMPLETED */ error("while-loop not implemented"); }
+                        { backpatch($5, pc - $5); }
+        | IF '(' expr ')' M stmt N ELSE stmt 
+        				{ backpatch($5, $7 - $5); backpatch($7, pc - $7); }
+        | WHILE L '(' expr ')' M stmt N
+                        { backpatch($6, pc - $6); backpatch($8, $2 - $8);}
         | DO stmt WHILE '(' expr ')' ';'
                         { /* TODO: TO BE COMPLETED */ error("do-while-loop not implemented"); }
         | FOR '(' expr ';' expr ';' expr ')' stmt
@@ -78,7 +78,7 @@ expr    : ID   '=' expr { emit(dup); emit2(istore, $1->localvar); }
         | expr LE  expr { /* TODO: TO BE COMPLETED */ error("!= operator not implemented");  }
         | expr GE  expr { /* TODO: TO BE COMPLETED */ error(">= operator not implemented"); }
         | expr '+' expr { emit(iadd); }
-        | expr '-' expr { /* TODO: TO BE COMPLETED */ error("- operator not implemented"); }
+        | expr '-' expr { emit(isub); }
         | expr '*' expr { /* TODO: TO BE COMPLETED */ error("* operator not implemented"); }
         | expr '/' expr { /* TODO: TO BE COMPLETED */ error("/ operator not implemented"); }
         | expr '%' expr { /* TODO: TO BE COMPLETED */ error("% operator not implemented"); }
@@ -88,7 +88,7 @@ expr    : ID   '=' expr { emit(dup); emit2(istore, $1->localvar); }
                         { /* TODO: TO BE COMPLETED */ error("unary + operator not implemented"); }
         | '-' expr %prec '!' /* '-' at same precedence level as '!' */
                         { /* TODO: TO BE COMPLETED */ error("unary - operator not implemented"); }
-        | '(' expr ')'
+        | '(' expr ')'  
         | '$' INT8      { emit(aload_1); emit2(bipush, $2); emit(iaload); }
         | PP ID         { /* TODO: TO BE COMPLETED */ error("pre ++ operator not implemented"); }
         | NN ID         { /* TODO: TO BE COMPLETED */ error("pre -- operator not implemented"); }

@@ -79,7 +79,6 @@ return					  	   { return RETURN; }
 "<:"                           { return '['; }
 ":>"                           { return ']'; }
 [!$%&()*+,\-./:;<=>?\[\]^{|}~] { return yytext[0]; }
-"return"                       { RETURN; }
 .                              { yyerror("Unknown character ignored"); }
 
 %%
