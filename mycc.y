@@ -1,6 +1,3 @@
-%nonassoc IFX
-%nonassoc ELSE
-
 %{
 
 #include "lex.yy.h"
@@ -42,7 +39,7 @@ static struct ClassFile cf;
 /* Declare attribute types for marker nonterminals, such as L M and N */
 /* TODO: TO BE COMPLETED WITH ADDITIONAL NONMARKERS AS NECESSARY */
 %type <loc> L M N
-
+%nonassoc ELSE
 %%
 
 stmts   : stmts stmt
@@ -51,14 +48,14 @@ stmts   : stmts stmt
 
 stmt    : ';'
         | expr ';'      { emit(pop); /* do not leave a value on the stack */ }
-        | IF '(' expr ')' M stmt %prec IFX
+        | IF '(' expr ')' M stmt
                         { backpatch($5, pc - $5); }
-        | IF '(' expr ')' M stmt N ELSE stmt 
-        				{ backpatch($5, $7 - $5); backpatch($7, pc - $7); }
+        | IF '(' expr ')' M stmt ELSE N L stmt 
+        				{ backpatch($5, $9 - $5); emit3(goto_, 3); backpatch($8, pc - $8); }
         | WHILE L '(' expr ')' M stmt N
-                        { backpatch($6, pc - $6); backpatch($8, $2 - $8);}
-        | DO stmt WHILE '(' expr ')' ';'
-                        { /* TODO: TO BE COMPLETED */ error("do-while-loop not implemented"); }
+                        { backpatch($6, pc - $6);  backpatch($8, $2 - $8);}
+        | DO L stmt WHILE '(' expr ')' M N ';'
+                        { backpatch($8, pc - $8); backpatch($9, $2 - $9); }
         | FOR '(' expr ';' expr ';' expr ')' stmt
                         { /* TODO: TO BE COMPLETED */ error("for-loop not implemented"); }
         | RETURN expr ';'
