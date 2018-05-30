@@ -38,7 +38,7 @@ static struct ClassFile cf;
 
 /* Declare attribute types for marker nonterminals, such as L M and N */
 /* TODO: TO BE COMPLETED WITH ADDITIONAL NONMARKERS AS NECESSARY */
-%type <loc> L M N
+%type <loc> L M N P
 %nonassoc ELSE
 %%
 
@@ -56,8 +56,8 @@ stmt    : ';'
                         { backpatch($6, pc - $6);  backpatch($8, $2 - $8);}
         | DO L stmt WHILE '(' expr ')' M N ';'
                         { backpatch($8, pc - $8); backpatch($9, $2 - $9); }
-        | FOR '(' expr ';' expr ';' expr ')' stmt
-                        { /* TODO: TO BE COMPLETED */ error("for-loop not implemented"); }
+        | FOR '(' expr P ';' L expr M N ';' L expr P N ')' L stmt N
+                        { backpatch($8, pc - $8); backpatch($9, $16 - $9); backpatch($18, $11 - $18); backpatch($14, $6 - $14);}
         | RETURN expr ';'
                         { emit(istore_2); /* return val goes in local var 2 */ }
         | BREAK ';'
@@ -101,6 +101,9 @@ expr    : ID   '=' expr { emit(dup); emit2(istore, $1->localvar); }
         | INT32         { emit2(ldc, constant_pool_add_Integer(&cf, $1)); }
 		| FLT		{ error("float constant not supported in Pr3"); }
 		| STR		{ error("string constant not supported in Pr3"); }
+        ;
+
+P       : /* empty */   { emit(pop); }
         ;
 
 L       : /* empty */   { $$ = pc; }
