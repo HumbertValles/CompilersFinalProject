@@ -1,0 +1,2591 @@
+Terminales no usados en la gramática
+
+   AA
+   XA
+   OA
+   LA
+   RA
+   '|'
+   '&'
+   LE
+   GE
+   LS
+   RS
+   '~'
+   '.'
+   AR
+
+
+Estat 138 conflictes: 1 canvi/reducció
+
+
+Gramática
+
+    0 $accept: prog $end
+
+    1 prog: Mprog exts
+
+    2 Mprog: %empty
+
+    3 exts: exts func
+    4     | exts decl
+    5     | %empty
+
+    6 func: MAIN '(' ')' Mmain block
+    7     | type ptr ID '(' Margs args ')' block
+
+    8 Mmain: %empty
+
+    9 Margs: %empty
+
+   10 block: '{' decls stmts '}'
+
+   11 decls: decls decl
+   12      | %empty
+
+   13 decl: list ';'
+
+   14 type: VOID
+   15     | INT
+   16     | FLOAT
+   17     | CHAR
+
+   18 args: args ',' type ptr ID
+   19     | type ptr ID
+
+   20 list: list ',' ptr ID
+   21     | type ptr ID
+
+   22 ptr: %empty
+   23    | '*'
+
+   24 stmts: stmts stmt
+   25      | %empty
+
+   26 stmt: ';'
+   27     | expr ';'
+   28     | IF '(' expr ')' M stmt
+   29     | IF '(' expr ')' M stmt ELSE N L stmt
+   30     | WHILE L '(' expr ')' M stmt N
+   31     | DO L stmt WHILE '(' expr ')' M N ';'
+   32     | FOR '(' expr P ';' L expr M N ';' L expr P N ')' L stmt N
+   33     | RETURN expr ';'
+   34     | BREAK ';'
+   35     | '{' stmts '}'
+   36     | error ';'
+
+   37 exprs: exprs ',' expr
+   38      | expr
+
+   39 expr: ID '=' expr
+   40     | ID PA expr
+   41     | ID NA expr
+   42     | ID TA expr
+   43     | ID DA expr
+   44     | ID MA expr
+   45     | expr OR expr
+   46     | expr AN expr
+   47     | expr '^' expr
+   48     | expr EQ expr
+   49     | expr NE expr
+   50     | expr '<' expr
+   51     | expr '>' expr
+   52     | expr '+' expr
+   53     | expr '-' expr
+   54     | expr '*' expr
+   55     | expr '/' expr
+   56     | expr '%' expr
+   57     | '!' expr
+   58     | '(' expr ')'
+   59     | '$' INT8
+   60     | ID PP
+   61     | ID NN
+   62     | ID
+   63     | INT8
+   64     | INT16
+   65     | INT32
+   66     | FLT
+   67     | STR
+   68     | ID '(' exprs ')'
+
+   69 L: %empty
+
+   70 M: %empty
+
+   71 N: %empty
+
+   72 P: %empty
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+'!' (33) 57
+'$' (36) 59
+'%' (37) 56
+'&' (38)
+'(' (40) 6 7 28 29 30 31 32 58 68
+')' (41) 6 7 28 29 30 31 32 58 68
+'*' (42) 23 54
+'+' (43) 52
+',' (44) 18 20 37
+'-' (45) 53
+'.' (46)
+'/' (47) 55
+';' (59) 13 26 27 31 32 33 34 36
+'<' (60) 50
+'=' (61) 39
+'>' (62) 51
+'^' (94) 47
+'{' (123) 10 35
+'|' (124)
+'}' (125) 10 35
+'~' (126)
+error (256) 36
+ID (258) 7 18 19 20 21 39 40 41 42 43 44 60 61 62 68
+INT8 (259) 59 63
+INT16 (260) 64
+INT32 (261) 65
+FLT (262) 66
+STR (263) 67
+BREAK (264) 34
+CHAR (265) 17
+DO (266) 31
+ELSE (267) 29
+FLOAT (268) 16
+FOR (269) 32
+IF (270) 28 29
+INT (271) 15
+MAIN (272) 6
+RETURN (273) 33
+VOID (274) 14
+WHILE (275) 30 31
+PA (276) 40
+NA (277) 41
+TA (278) 42
+DA (279) 43
+MA (280) 44
+AA (281)
+XA (282)
+OA (283)
+LA (284)
+RA (285)
+OR (286) 45
+AN (287) 46
+EQ (288) 48
+NE (289) 49
+LE (290)
+GE (291)
+LS (292)
+RS (293)
+PP (294) 60
+NN (295) 61
+AR (296)
+
+
+No terminales con las reglas donde aparecen
+
+$accept (63)
+    en la izquierda: 0
+prog (64)
+    en la izquierda: 1, en la derecha: 0
+Mprog (65)
+    en la izquierda: 2, en la derecha: 1
+exts (66)
+    en la izquierda: 3 4 5, en la derecha: 1 3 4
+func (67)
+    en la izquierda: 6 7, en la derecha: 3
+Mmain (68)
+    en la izquierda: 8, en la derecha: 6
+Margs (69)
+    en la izquierda: 9, en la derecha: 7
+block (70)
+    en la izquierda: 10, en la derecha: 6 7
+decls (71)
+    en la izquierda: 11 12, en la derecha: 10 11
+decl (72)
+    en la izquierda: 13, en la derecha: 4 11
+type (73)
+    en la izquierda: 14 15 16 17, en la derecha: 7 18 19 21
+args (74)
+    en la izquierda: 18 19, en la derecha: 7 18
+list (75)
+    en la izquierda: 20 21, en la derecha: 13 20
+ptr (76)
+    en la izquierda: 22 23, en la derecha: 7 18 19 20 21
+stmts (77)
+    en la izquierda: 24 25, en la derecha: 10 24 35
+stmt (78)
+    en la izquierda: 26 27 28 29 30 31 32 33 34 35 36, en la derecha:
+    24 28 29 30 31 32
+exprs (79)
+    en la izquierda: 37 38, en la derecha: 37 68
+expr (80)
+    en la izquierda: 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+    55 56 57 58 59 60 61 62 63 64 65 66 67 68, en la derecha: 27 28
+    29 30 31 32 33 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
+    53 54 55 56 57 58
+L (81)
+    en la izquierda: 69, en la derecha: 29 30 31 32
+M (82)
+    en la izquierda: 70, en la derecha: 28 29 30 31 32
+N (83)
+    en la izquierda: 71, en la derecha: 29 30 31 32
+P (84)
+    en la izquierda: 72, en la derecha: 32
+
+
+Estado 0
+
+    0 $accept: . prog $end
+
+    $default  reduce usando la regla 2 (Mprog)
+
+    prog   ir al estado 1
+    Mprog  ir al estado 2
+
+
+Estado 1
+
+    0 $accept: prog . $end
+
+    $end  desplazar e ir al estado 3
+
+
+Estado 2
+
+    1 prog: Mprog . exts
+
+    $default  reduce usando la regla 5 (exts)
+
+    exts  ir al estado 4
+
+
+Estado 3
+
+    0 $accept: prog $end .
+
+    $default  aceptar
+
+
+Estado 4
+
+    1 prog: Mprog exts .
+    3 exts: exts . func
+    4     | exts . decl
+
+    CHAR   desplazar e ir al estado 5
+    FLOAT  desplazar e ir al estado 6
+    INT    desplazar e ir al estado 7
+    MAIN   desplazar e ir al estado 8
+    VOID   desplazar e ir al estado 9
+
+    $default  reduce usando la regla 1 (prog)
+
+    func  ir al estado 10
+    decl  ir al estado 11
+    type  ir al estado 12
+    list  ir al estado 13
+
+
+Estado 5
+
+   17 type: CHAR .
+
+    $default  reduce usando la regla 17 (type)
+
+
+Estado 6
+
+   16 type: FLOAT .
+
+    $default  reduce usando la regla 16 (type)
+
+
+Estado 7
+
+   15 type: INT .
+
+    $default  reduce usando la regla 15 (type)
+
+
+Estado 8
+
+    6 func: MAIN . '(' ')' Mmain block
+
+    '('  desplazar e ir al estado 14
+
+
+Estado 9
+
+   14 type: VOID .
+
+    $default  reduce usando la regla 14 (type)
+
+
+Estado 10
+
+    3 exts: exts func .
+
+    $default  reduce usando la regla 3 (exts)
+
+
+Estado 11
+
+    4 exts: exts decl .
+
+    $default  reduce usando la regla 4 (exts)
+
+
+Estado 12
+
+    7 func: type . ptr ID '(' Margs args ')' block
+   21 list: type . ptr ID
+
+    '*'  desplazar e ir al estado 15
+
+    $default  reduce usando la regla 22 (ptr)
+
+    ptr  ir al estado 16
+
+
+Estado 13
+
+   13 decl: list . ';'
+   20 list: list . ',' ptr ID
+
+    ';'  desplazar e ir al estado 17
+    ','  desplazar e ir al estado 18
+
+
+Estado 14
+
+    6 func: MAIN '(' . ')' Mmain block
+
+    ')'  desplazar e ir al estado 19
+
+
+Estado 15
+
+   23 ptr: '*' .
+
+    $default  reduce usando la regla 23 (ptr)
+
+
+Estado 16
+
+    7 func: type ptr . ID '(' Margs args ')' block
+   21 list: type ptr . ID
+
+    ID  desplazar e ir al estado 20
+
+
+Estado 17
+
+   13 decl: list ';' .
+
+    $default  reduce usando la regla 13 (decl)
+
+
+Estado 18
+
+   20 list: list ',' . ptr ID
+
+    '*'  desplazar e ir al estado 15
+
+    $default  reduce usando la regla 22 (ptr)
+
+    ptr  ir al estado 21
+
+
+Estado 19
+
+    6 func: MAIN '(' ')' . Mmain block
+
+    $default  reduce usando la regla 8 (Mmain)
+
+    Mmain  ir al estado 22
+
+
+Estado 20
+
+    7 func: type ptr ID . '(' Margs args ')' block
+   21 list: type ptr ID .
+
+    '('  desplazar e ir al estado 23
+
+    $default  reduce usando la regla 21 (list)
+
+
+Estado 21
+
+   20 list: list ',' ptr . ID
+
+    ID  desplazar e ir al estado 24
+
+
+Estado 22
+
+    6 func: MAIN '(' ')' Mmain . block
+
+    '{'  desplazar e ir al estado 25
+
+    block  ir al estado 26
+
+
+Estado 23
+
+    7 func: type ptr ID '(' . Margs args ')' block
+
+    $default  reduce usando la regla 9 (Margs)
+
+    Margs  ir al estado 27
+
+
+Estado 24
+
+   20 list: list ',' ptr ID .
+
+    $default  reduce usando la regla 20 (list)
+
+
+Estado 25
+
+   10 block: '{' . decls stmts '}'
+
+    $default  reduce usando la regla 12 (decls)
+
+    decls  ir al estado 28
+
+
+Estado 26
+
+    6 func: MAIN '(' ')' Mmain block .
+
+    $default  reduce usando la regla 6 (func)
+
+
+Estado 27
+
+    7 func: type ptr ID '(' Margs . args ')' block
+
+    CHAR   desplazar e ir al estado 5
+    FLOAT  desplazar e ir al estado 6
+    INT    desplazar e ir al estado 7
+    VOID   desplazar e ir al estado 9
+
+    type  ir al estado 29
+    args  ir al estado 30
+
+
+Estado 28
+
+   10 block: '{' decls . stmts '}'
+   11 decls: decls . decl
+
+    CHAR   desplazar e ir al estado 5
+    FLOAT  desplazar e ir al estado 6
+    INT    desplazar e ir al estado 7
+    VOID   desplazar e ir al estado 9
+
+    $default  reduce usando la regla 25 (stmts)
+
+    decl   ir al estado 31
+    type   ir al estado 32
+    list   ir al estado 13
+    stmts  ir al estado 33
+
+
+Estado 29
+
+   19 args: type . ptr ID
+
+    '*'  desplazar e ir al estado 15
+
+    $default  reduce usando la regla 22 (ptr)
+
+    ptr  ir al estado 34
+
+
+Estado 30
+
+    7 func: type ptr ID '(' Margs args . ')' block
+   18 args: args . ',' type ptr ID
+
+    ')'  desplazar e ir al estado 35
+    ','  desplazar e ir al estado 36
+
+
+Estado 31
+
+   11 decls: decls decl .
+
+    $default  reduce usando la regla 11 (decls)
+
+
+Estado 32
+
+   21 list: type . ptr ID
+
+    '*'  desplazar e ir al estado 15
+
+    $default  reduce usando la regla 22 (ptr)
+
+    ptr  ir al estado 37
+
+
+Estado 33
+
+   10 block: '{' decls stmts . '}'
+   24 stmts: stmts . stmt
+
+    error   desplazar e ir al estado 38
+    ID      desplazar e ir al estado 39
+    INT8    desplazar e ir al estado 40
+    INT16   desplazar e ir al estado 41
+    INT32   desplazar e ir al estado 42
+    FLT     desplazar e ir al estado 43
+    STR     desplazar e ir al estado 44
+    BREAK   desplazar e ir al estado 45
+    DO      desplazar e ir al estado 46
+    FOR     desplazar e ir al estado 47
+    IF      desplazar e ir al estado 48
+    RETURN  desplazar e ir al estado 49
+    WHILE   desplazar e ir al estado 50
+    '!'     desplazar e ir al estado 51
+    '('     desplazar e ir al estado 52
+    '{'     desplazar e ir al estado 53
+    '}'     desplazar e ir al estado 54
+    ';'     desplazar e ir al estado 55
+    '$'     desplazar e ir al estado 56
+
+    stmt  ir al estado 57
+    expr  ir al estado 58
+
+
+Estado 34
+
+   19 args: type ptr . ID
+
+    ID  desplazar e ir al estado 59
+
+
+Estado 35
+
+    7 func: type ptr ID '(' Margs args ')' . block
+
+    '{'  desplazar e ir al estado 25
+
+    block  ir al estado 60
+
+
+Estado 36
+
+   18 args: args ',' . type ptr ID
+
+    CHAR   desplazar e ir al estado 5
+    FLOAT  desplazar e ir al estado 6
+    INT    desplazar e ir al estado 7
+    VOID   desplazar e ir al estado 9
+
+    type  ir al estado 61
+
+
+Estado 37
+
+   21 list: type ptr . ID
+
+    ID  desplazar e ir al estado 62
+
+
+Estado 38
+
+   36 stmt: error . ';'
+
+    ';'  desplazar e ir al estado 63
+
+
+Estado 39
+
+   39 expr: ID . '=' expr
+   40     | ID . PA expr
+   41     | ID . NA expr
+   42     | ID . TA expr
+   43     | ID . DA expr
+   44     | ID . MA expr
+   60     | ID . PP
+   61     | ID . NN
+   62     | ID .
+   68     | ID . '(' exprs ')'
+
+    '='  desplazar e ir al estado 64
+    PA   desplazar e ir al estado 65
+    NA   desplazar e ir al estado 66
+    TA   desplazar e ir al estado 67
+    DA   desplazar e ir al estado 68
+    MA   desplazar e ir al estado 69
+    PP   desplazar e ir al estado 70
+    NN   desplazar e ir al estado 71
+    '('  desplazar e ir al estado 72
+
+    $default  reduce usando la regla 62 (expr)
+
+
+Estado 40
+
+   63 expr: INT8 .
+
+    $default  reduce usando la regla 63 (expr)
+
+
+Estado 41
+
+   64 expr: INT16 .
+
+    $default  reduce usando la regla 64 (expr)
+
+
+Estado 42
+
+   65 expr: INT32 .
+
+    $default  reduce usando la regla 65 (expr)
+
+
+Estado 43
+
+   66 expr: FLT .
+
+    $default  reduce usando la regla 66 (expr)
+
+
+Estado 44
+
+   67 expr: STR .
+
+    $default  reduce usando la regla 67 (expr)
+
+
+Estado 45
+
+   34 stmt: BREAK . ';'
+
+    ';'  desplazar e ir al estado 73
+
+
+Estado 46
+
+   31 stmt: DO . L stmt WHILE '(' expr ')' M N ';'
+
+    $default  reduce usando la regla 69 (L)
+
+    L  ir al estado 74
+
+
+Estado 47
+
+   32 stmt: FOR . '(' expr P ';' L expr M N ';' L expr P N ')' L stmt N
+
+    '('  desplazar e ir al estado 75
+
+
+Estado 48
+
+   28 stmt: IF . '(' expr ')' M stmt
+   29     | IF . '(' expr ')' M stmt ELSE N L stmt
+
+    '('  desplazar e ir al estado 76
+
+
+Estado 49
+
+   33 stmt: RETURN . expr ';'
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 77
+
+
+Estado 50
+
+   30 stmt: WHILE . L '(' expr ')' M stmt N
+
+    $default  reduce usando la regla 69 (L)
+
+    L  ir al estado 78
+
+
+Estado 51
+
+   57 expr: '!' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 79
+
+
+Estado 52
+
+   58 expr: '(' . expr ')'
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 80
+
+
+Estado 53
+
+   35 stmt: '{' . stmts '}'
+
+    $default  reduce usando la regla 25 (stmts)
+
+    stmts  ir al estado 81
+
+
+Estado 54
+
+   10 block: '{' decls stmts '}' .
+
+    $default  reduce usando la regla 10 (block)
+
+
+Estado 55
+
+   26 stmt: ';' .
+
+    $default  reduce usando la regla 26 (stmt)
+
+
+Estado 56
+
+   59 expr: '$' . INT8
+
+    INT8  desplazar e ir al estado 82
+
+
+Estado 57
+
+   24 stmts: stmts stmt .
+
+    $default  reduce usando la regla 24 (stmts)
+
+
+Estado 58
+
+   27 stmt: expr . ';'
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+    ';'  desplazar e ir al estado 95
+
+
+Estado 59
+
+   19 args: type ptr ID .
+
+    $default  reduce usando la regla 19 (args)
+
+
+Estado 60
+
+    7 func: type ptr ID '(' Margs args ')' block .
+
+    $default  reduce usando la regla 7 (func)
+
+
+Estado 61
+
+   18 args: args ',' type . ptr ID
+
+    '*'  desplazar e ir al estado 15
+
+    $default  reduce usando la regla 22 (ptr)
+
+    ptr  ir al estado 96
+
+
+Estado 62
+
+   21 list: type ptr ID .
+
+    $default  reduce usando la regla 21 (list)
+
+
+Estado 63
+
+   36 stmt: error ';' .
+
+    $default  reduce usando la regla 36 (stmt)
+
+
+Estado 64
+
+   39 expr: ID '=' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 97
+
+
+Estado 65
+
+   40 expr: ID PA . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 98
+
+
+Estado 66
+
+   41 expr: ID NA . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 99
+
+
+Estado 67
+
+   42 expr: ID TA . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 100
+
+
+Estado 68
+
+   43 expr: ID DA . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 101
+
+
+Estado 69
+
+   44 expr: ID MA . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 102
+
+
+Estado 70
+
+   60 expr: ID PP .
+
+    $default  reduce usando la regla 60 (expr)
+
+
+Estado 71
+
+   61 expr: ID NN .
+
+    $default  reduce usando la regla 61 (expr)
+
+
+Estado 72
+
+   68 expr: ID '(' . exprs ')'
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    exprs  ir al estado 103
+    expr   ir al estado 104
+
+
+Estado 73
+
+   34 stmt: BREAK ';' .
+
+    $default  reduce usando la regla 34 (stmt)
+
+
+Estado 74
+
+   31 stmt: DO L . stmt WHILE '(' expr ')' M N ';'
+
+    error   desplazar e ir al estado 38
+    ID      desplazar e ir al estado 39
+    INT8    desplazar e ir al estado 40
+    INT16   desplazar e ir al estado 41
+    INT32   desplazar e ir al estado 42
+    FLT     desplazar e ir al estado 43
+    STR     desplazar e ir al estado 44
+    BREAK   desplazar e ir al estado 45
+    DO      desplazar e ir al estado 46
+    FOR     desplazar e ir al estado 47
+    IF      desplazar e ir al estado 48
+    RETURN  desplazar e ir al estado 49
+    WHILE   desplazar e ir al estado 50
+    '!'     desplazar e ir al estado 51
+    '('     desplazar e ir al estado 52
+    '{'     desplazar e ir al estado 53
+    ';'     desplazar e ir al estado 55
+    '$'     desplazar e ir al estado 56
+
+    stmt  ir al estado 105
+    expr  ir al estado 58
+
+
+Estado 75
+
+   32 stmt: FOR '(' . expr P ';' L expr M N ';' L expr P N ')' L stmt N
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 106
+
+
+Estado 76
+
+   28 stmt: IF '(' . expr ')' M stmt
+   29     | IF '(' . expr ')' M stmt ELSE N L stmt
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 107
+
+
+Estado 77
+
+   33 stmt: RETURN expr . ';'
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+    ';'  desplazar e ir al estado 108
+
+
+Estado 78
+
+   30 stmt: WHILE L . '(' expr ')' M stmt N
+
+    '('  desplazar e ir al estado 109
+
+
+Estado 79
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+   57     | '!' expr .
+
+    $default  reduce usando la regla 57 (expr)
+
+
+Estado 80
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+   58     | '(' expr . ')'
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+    ')'  desplazar e ir al estado 110
+
+
+Estado 81
+
+   24 stmts: stmts . stmt
+   35 stmt: '{' stmts . '}'
+
+    error   desplazar e ir al estado 38
+    ID      desplazar e ir al estado 39
+    INT8    desplazar e ir al estado 40
+    INT16   desplazar e ir al estado 41
+    INT32   desplazar e ir al estado 42
+    FLT     desplazar e ir al estado 43
+    STR     desplazar e ir al estado 44
+    BREAK   desplazar e ir al estado 45
+    DO      desplazar e ir al estado 46
+    FOR     desplazar e ir al estado 47
+    IF      desplazar e ir al estado 48
+    RETURN  desplazar e ir al estado 49
+    WHILE   desplazar e ir al estado 50
+    '!'     desplazar e ir al estado 51
+    '('     desplazar e ir al estado 52
+    '{'     desplazar e ir al estado 53
+    '}'     desplazar e ir al estado 111
+    ';'     desplazar e ir al estado 55
+    '$'     desplazar e ir al estado 56
+
+    stmt  ir al estado 57
+    expr  ir al estado 58
+
+
+Estado 82
+
+   59 expr: '$' INT8 .
+
+    $default  reduce usando la regla 59 (expr)
+
+
+Estado 83
+
+   45 expr: expr OR . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 112
+
+
+Estado 84
+
+   46 expr: expr AN . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 113
+
+
+Estado 85
+
+   47 expr: expr '^' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 114
+
+
+Estado 86
+
+   48 expr: expr EQ . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 115
+
+
+Estado 87
+
+   49 expr: expr NE . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 116
+
+
+Estado 88
+
+   50 expr: expr '<' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 117
+
+
+Estado 89
+
+   51 expr: expr '>' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 118
+
+
+Estado 90
+
+   52 expr: expr '+' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 119
+
+
+Estado 91
+
+   53 expr: expr '-' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 120
+
+
+Estado 92
+
+   54 expr: expr '*' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 121
+
+
+Estado 93
+
+   55 expr: expr '/' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 122
+
+
+Estado 94
+
+   56 expr: expr '%' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 123
+
+
+Estado 95
+
+   27 stmt: expr ';' .
+
+    $default  reduce usando la regla 27 (stmt)
+
+
+Estado 96
+
+   18 args: args ',' type ptr . ID
+
+    ID  desplazar e ir al estado 124
+
+
+Estado 97
+
+   39 expr: ID '=' expr .
+   45     | expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 39 (expr)
+
+
+Estado 98
+
+   40 expr: ID PA expr .
+   45     | expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 40 (expr)
+
+
+Estado 99
+
+   41 expr: ID NA expr .
+   45     | expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 41 (expr)
+
+
+Estado 100
+
+   42 expr: ID TA expr .
+   45     | expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 42 (expr)
+
+
+Estado 101
+
+   43 expr: ID DA expr .
+   45     | expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 43 (expr)
+
+
+Estado 102
+
+   44 expr: ID MA expr .
+   45     | expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 44 (expr)
+
+
+Estado 103
+
+   37 exprs: exprs . ',' expr
+   68 expr: ID '(' exprs . ')'
+
+    ')'  desplazar e ir al estado 125
+    ','  desplazar e ir al estado 126
+
+
+Estado 104
+
+   38 exprs: expr .
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 38 (exprs)
+
+
+Estado 105
+
+   31 stmt: DO L stmt . WHILE '(' expr ')' M N ';'
+
+    WHILE  desplazar e ir al estado 127
+
+
+Estado 106
+
+   32 stmt: FOR '(' expr . P ';' L expr M N ';' L expr P N ')' L stmt N
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 72 (P)
+
+    P  ir al estado 128
+
+
+Estado 107
+
+   28 stmt: IF '(' expr . ')' M stmt
+   29     | IF '(' expr . ')' M stmt ELSE N L stmt
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+    ')'  desplazar e ir al estado 129
+
+
+Estado 108
+
+   33 stmt: RETURN expr ';' .
+
+    $default  reduce usando la regla 33 (stmt)
+
+
+Estado 109
+
+   30 stmt: WHILE L '(' . expr ')' M stmt N
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 130
+
+
+Estado 110
+
+   58 expr: '(' expr ')' .
+
+    $default  reduce usando la regla 58 (expr)
+
+
+Estado 111
+
+   35 stmt: '{' stmts '}' .
+
+    $default  reduce usando la regla 35 (stmt)
+
+
+Estado 112
+
+   45 expr: expr . OR expr
+   45     | expr OR expr .
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 45 (expr)
+
+
+Estado 113
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   46     | expr AN expr .
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 46 (expr)
+
+
+Estado 114
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   47     | expr '^' expr .
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 47 (expr)
+
+
+Estado 115
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   48     | expr EQ expr .
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 48 (expr)
+
+
+Estado 116
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   49     | expr NE expr .
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 49 (expr)
+
+
+Estado 117
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   50     | expr '<' expr .
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 50 (expr)
+
+
+Estado 118
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   51     | expr '>' expr .
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 51 (expr)
+
+
+Estado 119
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   52     | expr '+' expr .
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 52 (expr)
+
+
+Estado 120
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   53     | expr '-' expr .
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 53 (expr)
+
+
+Estado 121
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   54     | expr '*' expr .
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    $default  reduce usando la regla 54 (expr)
+
+
+Estado 122
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   55     | expr '/' expr .
+   56     | expr . '%' expr
+
+    $default  reduce usando la regla 55 (expr)
+
+
+Estado 123
+
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+   56     | expr '%' expr .
+
+    $default  reduce usando la regla 56 (expr)
+
+
+Estado 124
+
+   18 args: args ',' type ptr ID .
+
+    $default  reduce usando la regla 18 (args)
+
+
+Estado 125
+
+   68 expr: ID '(' exprs ')' .
+
+    $default  reduce usando la regla 68 (expr)
+
+
+Estado 126
+
+   37 exprs: exprs ',' . expr
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 131
+
+
+Estado 127
+
+   31 stmt: DO L stmt WHILE . '(' expr ')' M N ';'
+
+    '('  desplazar e ir al estado 132
+
+
+Estado 128
+
+   32 stmt: FOR '(' expr P . ';' L expr M N ';' L expr P N ')' L stmt N
+
+    ';'  desplazar e ir al estado 133
+
+
+Estado 129
+
+   28 stmt: IF '(' expr ')' . M stmt
+   29     | IF '(' expr ')' . M stmt ELSE N L stmt
+
+    $default  reduce usando la regla 70 (M)
+
+    M  ir al estado 134
+
+
+Estado 130
+
+   30 stmt: WHILE L '(' expr . ')' M stmt N
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+    ')'  desplazar e ir al estado 135
+
+
+Estado 131
+
+   37 exprs: exprs ',' expr .
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 37 (exprs)
+
+
+Estado 132
+
+   31 stmt: DO L stmt WHILE '(' . expr ')' M N ';'
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 136
+
+
+Estado 133
+
+   32 stmt: FOR '(' expr P ';' . L expr M N ';' L expr P N ')' L stmt N
+
+    $default  reduce usando la regla 69 (L)
+
+    L  ir al estado 137
+
+
+Estado 134
+
+   28 stmt: IF '(' expr ')' M . stmt
+   29     | IF '(' expr ')' M . stmt ELSE N L stmt
+
+    error   desplazar e ir al estado 38
+    ID      desplazar e ir al estado 39
+    INT8    desplazar e ir al estado 40
+    INT16   desplazar e ir al estado 41
+    INT32   desplazar e ir al estado 42
+    FLT     desplazar e ir al estado 43
+    STR     desplazar e ir al estado 44
+    BREAK   desplazar e ir al estado 45
+    DO      desplazar e ir al estado 46
+    FOR     desplazar e ir al estado 47
+    IF      desplazar e ir al estado 48
+    RETURN  desplazar e ir al estado 49
+    WHILE   desplazar e ir al estado 50
+    '!'     desplazar e ir al estado 51
+    '('     desplazar e ir al estado 52
+    '{'     desplazar e ir al estado 53
+    ';'     desplazar e ir al estado 55
+    '$'     desplazar e ir al estado 56
+
+    stmt  ir al estado 138
+    expr  ir al estado 58
+
+
+Estado 135
+
+   30 stmt: WHILE L '(' expr ')' . M stmt N
+
+    $default  reduce usando la regla 70 (M)
+
+    M  ir al estado 139
+
+
+Estado 136
+
+   31 stmt: DO L stmt WHILE '(' expr . ')' M N ';'
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+    ')'  desplazar e ir al estado 140
+
+
+Estado 137
+
+   32 stmt: FOR '(' expr P ';' L . expr M N ';' L expr P N ')' L stmt N
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 141
+
+
+Estado 138
+
+   28 stmt: IF '(' expr ')' M stmt .
+   29     | IF '(' expr ')' M stmt . ELSE N L stmt
+
+    ELSE  desplazar e ir al estado 142
+
+    ELSE      [reduce usando la regla 28 (stmt)]
+    $default  reduce usando la regla 28 (stmt)
+
+
+Estado 139
+
+   30 stmt: WHILE L '(' expr ')' M . stmt N
+
+    error   desplazar e ir al estado 38
+    ID      desplazar e ir al estado 39
+    INT8    desplazar e ir al estado 40
+    INT16   desplazar e ir al estado 41
+    INT32   desplazar e ir al estado 42
+    FLT     desplazar e ir al estado 43
+    STR     desplazar e ir al estado 44
+    BREAK   desplazar e ir al estado 45
+    DO      desplazar e ir al estado 46
+    FOR     desplazar e ir al estado 47
+    IF      desplazar e ir al estado 48
+    RETURN  desplazar e ir al estado 49
+    WHILE   desplazar e ir al estado 50
+    '!'     desplazar e ir al estado 51
+    '('     desplazar e ir al estado 52
+    '{'     desplazar e ir al estado 53
+    ';'     desplazar e ir al estado 55
+    '$'     desplazar e ir al estado 56
+
+    stmt  ir al estado 143
+    expr  ir al estado 58
+
+
+Estado 140
+
+   31 stmt: DO L stmt WHILE '(' expr ')' . M N ';'
+
+    $default  reduce usando la regla 70 (M)
+
+    M  ir al estado 144
+
+
+Estado 141
+
+   32 stmt: FOR '(' expr P ';' L expr . M N ';' L expr P N ')' L stmt N
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 70 (M)
+
+    M  ir al estado 145
+
+
+Estado 142
+
+   29 stmt: IF '(' expr ')' M stmt ELSE . N L stmt
+
+    $default  reduce usando la regla 71 (N)
+
+    N  ir al estado 146
+
+
+Estado 143
+
+   30 stmt: WHILE L '(' expr ')' M stmt . N
+
+    $default  reduce usando la regla 71 (N)
+
+    N  ir al estado 147
+
+
+Estado 144
+
+   31 stmt: DO L stmt WHILE '(' expr ')' M . N ';'
+
+    $default  reduce usando la regla 71 (N)
+
+    N  ir al estado 148
+
+
+Estado 145
+
+   32 stmt: FOR '(' expr P ';' L expr M . N ';' L expr P N ')' L stmt N
+
+    $default  reduce usando la regla 71 (N)
+
+    N  ir al estado 149
+
+
+Estado 146
+
+   29 stmt: IF '(' expr ')' M stmt ELSE N . L stmt
+
+    $default  reduce usando la regla 69 (L)
+
+    L  ir al estado 150
+
+
+Estado 147
+
+   30 stmt: WHILE L '(' expr ')' M stmt N .
+
+    $default  reduce usando la regla 30 (stmt)
+
+
+Estado 148
+
+   31 stmt: DO L stmt WHILE '(' expr ')' M N . ';'
+
+    ';'  desplazar e ir al estado 151
+
+
+Estado 149
+
+   32 stmt: FOR '(' expr P ';' L expr M N . ';' L expr P N ')' L stmt N
+
+    ';'  desplazar e ir al estado 152
+
+
+Estado 150
+
+   29 stmt: IF '(' expr ')' M stmt ELSE N L . stmt
+
+    error   desplazar e ir al estado 38
+    ID      desplazar e ir al estado 39
+    INT8    desplazar e ir al estado 40
+    INT16   desplazar e ir al estado 41
+    INT32   desplazar e ir al estado 42
+    FLT     desplazar e ir al estado 43
+    STR     desplazar e ir al estado 44
+    BREAK   desplazar e ir al estado 45
+    DO      desplazar e ir al estado 46
+    FOR     desplazar e ir al estado 47
+    IF      desplazar e ir al estado 48
+    RETURN  desplazar e ir al estado 49
+    WHILE   desplazar e ir al estado 50
+    '!'     desplazar e ir al estado 51
+    '('     desplazar e ir al estado 52
+    '{'     desplazar e ir al estado 53
+    ';'     desplazar e ir al estado 55
+    '$'     desplazar e ir al estado 56
+
+    stmt  ir al estado 153
+    expr  ir al estado 58
+
+
+Estado 151
+
+   31 stmt: DO L stmt WHILE '(' expr ')' M N ';' .
+
+    $default  reduce usando la regla 31 (stmt)
+
+
+Estado 152
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' . L expr P N ')' L stmt N
+
+    $default  reduce usando la regla 69 (L)
+
+    L  ir al estado 154
+
+
+Estado 153
+
+   29 stmt: IF '(' expr ')' M stmt ELSE N L stmt .
+
+    $default  reduce usando la regla 29 (stmt)
+
+
+Estado 154
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L . expr P N ')' L stmt N
+
+    ID     desplazar e ir al estado 39
+    INT8   desplazar e ir al estado 40
+    INT16  desplazar e ir al estado 41
+    INT32  desplazar e ir al estado 42
+    FLT    desplazar e ir al estado 43
+    STR    desplazar e ir al estado 44
+    '!'    desplazar e ir al estado 51
+    '('    desplazar e ir al estado 52
+    '$'    desplazar e ir al estado 56
+
+    expr  ir al estado 155
+
+
+Estado 155
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L expr . P N ')' L stmt N
+   45 expr: expr . OR expr
+   46     | expr . AN expr
+   47     | expr . '^' expr
+   48     | expr . EQ expr
+   49     | expr . NE expr
+   50     | expr . '<' expr
+   51     | expr . '>' expr
+   52     | expr . '+' expr
+   53     | expr . '-' expr
+   54     | expr . '*' expr
+   55     | expr . '/' expr
+   56     | expr . '%' expr
+
+    OR   desplazar e ir al estado 83
+    AN   desplazar e ir al estado 84
+    '^'  desplazar e ir al estado 85
+    EQ   desplazar e ir al estado 86
+    NE   desplazar e ir al estado 87
+    '<'  desplazar e ir al estado 88
+    '>'  desplazar e ir al estado 89
+    '+'  desplazar e ir al estado 90
+    '-'  desplazar e ir al estado 91
+    '*'  desplazar e ir al estado 92
+    '/'  desplazar e ir al estado 93
+    '%'  desplazar e ir al estado 94
+
+    $default  reduce usando la regla 72 (P)
+
+    P  ir al estado 156
+
+
+Estado 156
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L expr P . N ')' L stmt N
+
+    $default  reduce usando la regla 71 (N)
+
+    N  ir al estado 157
+
+
+Estado 157
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L expr P N . ')' L stmt N
+
+    ')'  desplazar e ir al estado 158
+
+
+Estado 158
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L expr P N ')' . L stmt N
+
+    $default  reduce usando la regla 69 (L)
+
+    L  ir al estado 159
+
+
+Estado 159
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L expr P N ')' L . stmt N
+
+    error   desplazar e ir al estado 38
+    ID      desplazar e ir al estado 39
+    INT8    desplazar e ir al estado 40
+    INT16   desplazar e ir al estado 41
+    INT32   desplazar e ir al estado 42
+    FLT     desplazar e ir al estado 43
+    STR     desplazar e ir al estado 44
+    BREAK   desplazar e ir al estado 45
+    DO      desplazar e ir al estado 46
+    FOR     desplazar e ir al estado 47
+    IF      desplazar e ir al estado 48
+    RETURN  desplazar e ir al estado 49
+    WHILE   desplazar e ir al estado 50
+    '!'     desplazar e ir al estado 51
+    '('     desplazar e ir al estado 52
+    '{'     desplazar e ir al estado 53
+    ';'     desplazar e ir al estado 55
+    '$'     desplazar e ir al estado 56
+
+    stmt  ir al estado 160
+    expr  ir al estado 58
+
+
+Estado 160
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L expr P N ')' L stmt . N
+
+    $default  reduce usando la regla 71 (N)
+
+    N  ir al estado 161
+
+
+Estado 161
+
+   32 stmt: FOR '(' expr P ';' L expr M N ';' L expr P N ')' L stmt N .
+
+    $default  reduce usando la regla 32 (stmt)
