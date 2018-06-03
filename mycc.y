@@ -327,8 +327,10 @@ expr    : ID   '=' expr { int place = 0; /*emit(dup); emit2(istore, $1->localvar
         | expr '^' expr { error("^ operator not implemented"); }
         | expr EQ  expr { error("== operator not implemented"); }
         | expr NE  expr { error("!= operator not implemented"); }
-        | expr '<' expr { emit3(if_icmpge, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
-        | expr '>' expr { emit3(if_icmple, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
+        | expr '<' expr { emit3(if_icmpgt, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
+        | expr '>' expr { emit3(if_icmplt, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
+        | expr 'LE' expr { emit3(if_icmpge, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
+        | expr 'GE' expr { emit3(if_icmple, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
         | expr '+' expr { emit(iadd); }
         | expr '-' expr { emit(isub); }
         | expr '*' expr { emit(imul); }
