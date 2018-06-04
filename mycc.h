@@ -122,7 +122,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 11 "mycc.y" /* yacc.c:1909  */
+#line 12 "mycc.y" /* yacc.c:1909  */
  Symbol *sym;  /* token value yylval.sym is the symbol table entry of an ID */
   unsigned num; /* token value yylval.num is the value of an int constant */
   float flt;    /* token value yylval.flt is the value of a float constant */
