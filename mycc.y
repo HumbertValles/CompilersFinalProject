@@ -330,7 +330,6 @@ expr    : ID   '=' expr { int place = 0; /*emit(dup); emit2(istore, $1->localvar
         | expr '*' expr { emit(imul); }
         | expr '/' expr { emit(idiv); }
         | expr '%' expr { emit(irem); }
-        | '!' expr      { emit(ineg); }
         | '(' expr ')'
         | '$' INT8      { // check that we are in main()
 			  if (is_in_main)
