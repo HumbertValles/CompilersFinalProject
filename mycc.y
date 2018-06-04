@@ -142,11 +142,11 @@ func	: MAIN '(' ')' Mmain block
 			{ /* TASK 3: TO BE COMPLETED */
 			Table *table;
 			// add code to create function’s type with mkfun()
-			Type type = mkfun("[Ljava/lang/String;", $1);
+			Type type = mkfun($6, $1);
 			// add new static method to Class file method array (see below)
 			cf.methods[cf.method_count].access = (enum access_flags)(ACC_PUBLIC | ACC_STATIC);
-			cf.methods[cf.method_count].name = (const char*) $3;
-			cf.methods[cf.method_count].descriptor = $1;
+			cf.methods[cf.method_count].name = $3->lexptr;
+			cf.methods[cf.method_count].descriptor = type;
 			cf.methods[cf.method_count].code_length = pc; // the code size
 			cf.methods[cf.method_count].code = copy_code();
 			if (!cf.methods[cf.method_count].code)
@@ -317,14 +317,8 @@ expr    : ID   '=' expr { int place = 0; /*emit(dup); emit2(istore, $1->localvar
 							emit2(fstore, place); 
 						}
 						}
-        | ID   PA  expr { error("+= operator not implemented"); }
-        | ID   NA  expr { error("-= operator not implemented"); }
-        | ID   TA  expr { error("*= operator not implemented"); }
-        | ID   DA  expr { error("/= operator not implemented"); }
-        | ID   MA  expr { error("%= operator not implemented"); }
         | expr OR  expr { emit(ior); }
         | expr AN  expr { emit(iand); }
-        | expr '^' expr { error("^ operator not implemented"); }
         | expr EQ  expr { emit3(if_icmpne, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
         | expr NE  expr { emit3(if_icmpeq, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
         | expr LE  expr { emit3(if_icmpgt, 7); emit(iconst_1); emit3(goto_, 4); emit(iconst_0); }
@@ -336,7 +330,7 @@ expr    : ID   '=' expr { int place = 0; /*emit(dup); emit2(istore, $1->localvar
         | expr '*' expr { emit(imul); }
         | expr '/' expr { emit(idiv); }
         | expr '%' expr { emit(irem); }
-        | '!' expr      { error("! operator not implemented"); }
+        | '!' expr      { emit(ineg); }
         | '(' expr ')'
         | '$' INT8      { // check that we are in main()
 			  if (is_in_main)
@@ -347,8 +341,6 @@ expr    : ID   '=' expr { int place = 0; /*emit(dup); emit2(istore, $1->localvar
 			  else
 			  	error("invalid use of $# in function");
 			}
-        | ID PP         { emit(pop); emit(iconst_1); emit(iadd); }
-        | ID NN         { error("post -- operator not implemented"); }
         | ID            { int place = 0; /*emit2(iload, $1->localvar);*/
         				// check ID is in table for local variables (level=1)
 						if(getlevel(top_tblptr, $1) == 1) {
