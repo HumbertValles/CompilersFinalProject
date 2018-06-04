@@ -306,15 +306,15 @@ expr    : ID   '=' expr { int place = 0; /*emit(dup); emit2(istore, $1->localvar
 						emit(dup);
 						if(getlevel(top_tblptr, $1) == 1) {
 							// add code to get place information for ID
-							getplace(top_tblptr, $1);
-						}
-						// if type of ID is integer:
-						if( isint(gettype(top_tblptr, $1))) {
-							emit2(istore, place);
-						}
-						// else if type of ID is float:
-						if( isfloat(gettype(top_tblptr, $1))) {
-							emit2(fstore, place); 
+							place = getplace(top_tblptr, $1);
+						    // if type of ID is integer:
+						    if( isint(gettype(top_tblptr, $1))) {
+							    emit2(istore, place);
+						    }
+						    // else if type of ID is float:
+						    if( isfloat(gettype(top_tblptr, $1))) {
+							    emit2(fstore, place); 
+						    }
 						}
 						}
         | expr OR  expr { emit(ior); }
@@ -342,20 +342,21 @@ expr    : ID   '=' expr { int place = 0; /*emit(dup); emit2(istore, $1->localvar
 			  	error("invalid use of $# in function");
 			}
         | ID            { int place = 0; /*emit2(iload, $1->localvar);*/
-        				// check ID is in table for local variables (level=1)
-						if(getlevel(top_tblptr, $1) == 1) {
+        				  // check ID is in table for local variables (level=1)
+						  if(getlevel(top_tblptr, $1) == 1) {
 							// add code to get place information for ID
-							getplace(top_tblptr, $1);
-						}
-						// if type of ID is integer:
-						if( isint(gettype(top_tblptr, $1))) {
+							place = getplace(top_tblptr, $1);
+						  }
+						  // if type of ID is integer:
+						  if( isint(gettype(top_tblptr, $1))) {
 							emit2(iload, place);
+						  }
+						  // else if type of ID is float:
+						  if( isfloat(gettype(top_tblptr, $1))) {
+							emit2(fload, place); 
+						  }
 						}
-						// else if type of ID is float:
-						if( isfloat(gettype(top_tblptr, $1))) {
-							emit2(iload, place); 
-						}
-						}
+
         | INT8          { emit2(bipush, $1); }
         | INT16         { emit3(sipush, $1); }
         | INT32         { emit2(ldc, constant_pool_add_Integer(&cf, $1)); }
